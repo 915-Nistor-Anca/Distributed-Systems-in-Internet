@@ -1,0 +1,52 @@
+<div class="add-recipe">
+  <h3>Add recipe</h3>
+  <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" required />
+      <mat-error *ngIf="recipeForm.get('name')?.hasError('required')">
+        Name is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Preparation steps</mat-label>
+      <input matInput formControlName="preparationSteps" required />
+      <mat-error *ngIf="recipeForm.get('preparationSteps')?.hasError('required')">
+        Preparation steps are required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Ingredients</mat-label>
+      <input matInput formControlName="ingredients" required />
+      <mat-error *ngIf="recipeForm.get('ingredients')?.hasError('required')">
+        Ingredients are required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Preparation Date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        formControlName="preparationDate"
+        required
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="recipeForm.get('preparationDate')?.hasError('required')">
+        Preparation Date is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-checkbox formControlName="isVegetarian">
+      Is Vegetarian
+    </mat-checkbox>
+
+    <button type="submit">Add Recipe</button>
+    <div *ngIf="formSubmitted && recipeForm.invalid">
+      All the fields are required.
+    </div>
+  </form>
+</div>
