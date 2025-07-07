@@ -1,0 +1,165 @@
+<div class="all-recipes-page">
+  <div class="recipe-pics">
+    <img src="assets//food1.jpg" alt="Food 1" />
+    <img src="assets/food2.jpg" alt="Food 2" />
+    <img src="assets/food3.jpg" alt="Food 3" />
+    <img src="assets/food4.jpg" alt="Food 4" />
+    <img src="assets/food5.jpg" alt="Food 5" />
+  </div>
+  <div class="title-button-section">
+    <h2>All Recipes</h2>
+    <div class="add-recipe">
+      <button (click)="viewAddRecipeDialog()">Add Recipe</button>
+    </div>
+  </div>
+  <div class="recipes">
+    <p>All recipes</p>
+    <div *ngIf="recipeResult$ | async as recipeResult">
+      <ng-container *ngIf="recipeResult.items.length > 0; else noRecipes">
+        <table mat-table [dataSource]="recipeResult.items">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let recipe; let i = dataIndex">
+              <div
+                *ngIf="
+                  isEditMode && editedRecipe && recipe.id == editedRecipe.id;
+                  else staticName
+                "
+              >
+                <input
+                  matInput
+                  [(ngModel)]="editedRecipe.name"
+                  placeholder="Name"
+                />
+              </div>
+              <ng-template #staticName>
+                {{ recipe.name }}
+              </ng-template>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="preparationSteps">
+            <th mat-header-cell *matHeaderCellDef>Preparation steps</th>
+            <td mat-cell *matCellDef="let recipe; let i = dataIndex">
+              <div
+                *ngIf="
+                  isEditMode && editedRecipe && recipe.id == editedRecipe.id;
+                  else staticPreparationSteps
+                "
+              >
+                <input
+                  matInput
+                  [(ngModel)]="editedRecipe.preparationSteps"
+                  placeholder="Preparation steps"
+                />
+              </div>
+              <ng-template #staticPreparationSteps>
+                {{ recipe.preparationSteps }}
+              </ng-template>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="ingredients">
+            <th mat-header-cell *matHeaderCellDef>Ingredients</th>
+            <td mat-cell *matCellDef="let recipe; let i = dataIndex">
+              <div
+                *ngIf="
+                  isEditMode && editedRecipe && recipe.id == editedRecipe.id;
+                  else staticIngredients
+                "
+              >
+                <input
+                  matInput
+                  [(ngModel)]="editedRecipe.ingredients"
+                  placeholder="Ingredients"
+                />
+              </div>
+              <ng-template #staticIngredients>
+                {{ recipe.ingredients }}
+              </ng-template>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="preparationDate">
+            <th mat-header-cell *matHeaderCellDef>Preparation date</th>
+            <td mat-cell *matCellDef="let recipe; let i = dataIndex">
+              <div
+                class="preparationDate"
+                *ngIf="
+                  isEditMode && editedRecipe && recipe.id == editedRecipe.id;
+                  else staticPreparationDate
+                "
+              >
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  [(ngModel)]="editedRecipe.preparationDate"
+                  placeholder="Choose date"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </div>
+              <ng-template #staticPreparationDate>
+                {{ recipe.preparationDate | date }}
+              </ng-template>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="isVegetarian">
+            <th mat-header-cell *matHeaderCellDef>Vegetarian</th>
+            <td mat-cell *matCellDef="let recipe; let i = dataIndex">
+              <div
+                class="isVegetarian"
+                *ngIf="isEditMode && editedRecipe && recipe.id === editedRecipe.id; else staticIsVegetarian"
+              >
+                <mat-checkbox
+                  [(ngModel)]="editedRecipe.isVegetarian"
+                  color="primary"
+                ></mat-checkbox>
+              </div>
+              <ng-template #staticIsVegetarian>
+                {{ recipe.isVegetarian ? 'Yes' : 'No' }}
+              </ng-template>
+            </td>
+          </ng-container>          
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let recipe; let i = dataIndex">
+              <button *ngIf="!isEditMode" (click)="editRecipe(recipe, i)">
+                Edit
+              </button>
+              <button
+                *ngIf="
+                  isEditMode && editedRecipe && recipe.id == editedRecipe.id
+                "
+                (click)="saveRecipe()"
+              >
+                Save
+              </button>
+              <button *ngIf="!isEditMode" (click)="deleteRecipe(recipe.id)">
+                Delete
+              </button>
+              <button
+                *ngIf="
+                  isEditMode && editedRecipe && recipe.id == editedRecipe.id
+                "
+                (click)="cancelEdit()"
+              >
+                Cancel
+              </button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="recipeColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: recipeColumns"></tr>
+        </table>
+      </ng-container>
+      <ng-template #noRecipes>
+        <p>No recipes added.</p>
+      </ng-template>
+      <mat-paginator
+        [length]="(recipeResult$ | async)?.totalCount"
+        showFirstLastButtons="true"
+        [pageSizeOptions]="[5, 10, 25]"
+      ></mat-paginator>
+    </div>
+  </div>
+</div>

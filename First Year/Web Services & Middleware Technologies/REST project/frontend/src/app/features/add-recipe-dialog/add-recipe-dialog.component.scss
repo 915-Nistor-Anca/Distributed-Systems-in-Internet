@@ -1,0 +1,72 @@
+.add-recipe {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 1rem;
+  background-color: #f0fdf4;
+  box-shadow: 0 4px 12px rgba(0, 128, 0, 0.1);
+
+  h3 {
+    text-align: center;
+    color: #2f855a;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+
+    mat-form-field {
+      width: 100%;
+      background-color: #ffffff;
+      border-radius: 6px;
+
+      .mat-form-field-flex {
+        background-color: #e8f5e9;
+      }
+
+      .mat-form-field-outline {
+        color: #66bb6a;
+      }
+
+      .mat-input-element {
+        padding: 0.5rem;
+      }
+
+      .mat-error {
+        font-size: 0.8rem;
+        color: #c62828;
+      }
+    }
+
+    button[type="submit"] {
+      padding: 0.75rem;
+      background-color: #68d391;
+      color: #fff;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #2f855a;
+      }
+
+      &:disabled {
+        background-color: #a5d6a7;
+        cursor: not-allowed;
+      }
+    }
+
+    div[ngif] {
+      color: #c62828;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      text-align: center;
+    }
+  }
+}
