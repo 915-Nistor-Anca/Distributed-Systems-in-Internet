@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VetApp - Manage Animals</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .animal-list {
+            margin-top: 20px;
+        }
+        .animal-item {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Animal Management</h1>
+        <form id="animalForm">
+            <input type="hidden" id="id">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter animal name" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender" required>
+                    <option value="">Select gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="birthyear">Birth Year</label>
+                <input type="number" id="birthyear" name="birthyear" placeholder="Enter birth year" required>
+            </div>
+            <div class="form-group">
+                <label for="owner_id">Owner ID</label>
+                <input type="number" id="owner_id" name="owner_id" placeholder="Enter owner ID" required>
+            </div>
+            <div class="form-group">
+                <label for="specie_id">Specie ID</label>
+                <input type="number" id="specie_id" name="specie_id" placeholder="Enter specie ID" required>
+            </div>
+            <div class="form-group">
+                <label for="vet_id">Vet ID</label>
+                <input type="number" id="vet_id" name="vet_id" placeholder="Enter vet ID" required>
+            </div>
+            <button type="submit">Save Animal</button>
+        </form>
+
+        <div class="animal-list" id="animalList">
+            <h2>Animals</h2>
+            <button id="fetchAnimals">Fetch All Animals</button>
+            <ul id="animalListItems"></ul>
+        </div>
+
+        <form id="deleteForm">
+            <div class="form-group">
+                <label for="deleteId">Animal ID to Delete</label>
+                <input type="number" id="deleteId" name="deleteId" placeholder="Enter ID" required>
+            </div>
+            <button type="submit">Delete Animal</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

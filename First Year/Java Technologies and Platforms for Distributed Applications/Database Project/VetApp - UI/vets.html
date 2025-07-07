@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vet Management</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-100 p-6">
+
+  <h1 class="text-2xl font-bold mb-4">Vet Management</h1>
+
+  <div class="bg-white p-6 shadow-lg mb-6">
+    <form id="vetForm">
+      <div class="mb-4">
+        <label for="id" class="block text-sm font-semibold">Vet ID (optional for update):</label>
+        <input type="text" id="id" class="w-full p-2 border rounded" placeholder="Enter vet ID for update">
+      </div>
+      <div class="mb-4">
+        <label for="name" class="block text-sm font-semibold">Name:</label>
+        <input type="text" id="name" class="w-full p-2 border rounded" placeholder="Enter vet name" required>
+      </div>
+      <div class="mb-4">
+        <label for="phonenumber" class="block text-sm font-semibold">Phone Number:</label>
+        <input type="text" id="phonenumber" class="w-full p-2 border rounded" placeholder="Enter phone number" required>
+      </div>
+      <div class="mb-4">
+        <label for="veterinaryclinic_id" class="block text-sm font-semibold">Veterinary Clinic ID:</label>
+        <input type="text" id="veterinaryclinic_id" class="w-full p-2 border rounded" placeholder="Enter veterinary clinic ID" required>
+      </div>
+      <button type="submit" class="bg-blue-500 text-white p-2 rounded">Save Vet</button>
+    </form>
+  </div>
+
+  <div class="bg-white p-6 shadow-lg">
+    <h2 class="text-xl font-semibold mb-4">Vet List</h2>
+    <ul id="vetList" class="list-disc pl-5">
+    </ul>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const baseUrl = 'http://localhost:8080/VetApp_war_exploded/vets';
+
+    window.onload = async function() {
+      await fetchVets();
+    };
+
+    async function fetchVets() {
+      try {
+        const response = await axios.get(baseUrl);
+        const vets = response.data;
+
+        const vetList = document.getElementById('vetList');
+        vetList.innerHTML = '';
+
+        vets.forEach(vet => {
+          const listItem = document.createElement('li');
+          listItem.classList.add('mb-2');
+          listItem.textContent = `ID: ${vet.id}, Name: ${vet.name}, Phone: ${vet.phonenumber}, Clinic ID: ${vet.veterinaryclinicId}`;
+          vetList.appendChild(listItem);
+        });
+      } catch (error) {
+        alert('Error fetching vets');
+      }
+    }
+
+    document.getElementById('vetForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      const id = document.getElementById('id').value;
+      const name = document.getElementById('name').value;
+      const phonenumber = document.getElementById('phonenumber').value;
+      const veterinaryclinicId = document.getElementById('veterinaryclinic_id').value;
+
+      const vetData = {
+        name: name,
+        phonenumber: phonenumber,
+        veterinaryclinic_id: veterinaryclinicId
+      };
+
+      if (id) {
+        try {
+          const response = await axios.put(`${baseUrl}?id=${id}`, vetData);
+          alert('Vet updated successfully!');
+          fetchVets();
+        } catch (error) {
+          alert('Error updating vet');
+        }
+      } else {
+        try {
+          const response = await axios.post(baseUrl, vetData);
+          alert('Vet added successfully!');
+          fetchVets();
+        } catch (error) {
+          alert('Error adding vet');
+        }
+      }
+
+      document.getElementById('vetForm').reset();
+    });
+
+    async function deleteVet(id) {
+      try {
+        await axios.delete(`${baseUrl}?id=${id}`);
+        alert('Vet deleted successfully!');
+        fetchVets();
+      } catch (error) {
+        alert('Error deleting vet');
+      }
+    }
+  </script>
+
+</body>
+</html>

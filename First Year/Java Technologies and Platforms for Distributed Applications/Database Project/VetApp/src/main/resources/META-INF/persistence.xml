@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_2.xsd"
+             version="3.2">
+
+  <persistence-unit name="mssql-unit" transaction-type="RESOURCE_LOCAL">
+    <class>org.example.vetapp.model.Animal</class>
+    <class>org.example.vetapp.model.Specie</class>
+    <class>org.example.vetapp.model.Owner</class>
+    <properties>
+      <property name="jakarta.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+      <property name="jakarta.persistence.jdbc.url" value="jdbc:sqlserver://ANCAALEXIA;databaseName=vetapp;user=vetAppUser;password=userpassword;encrypt=true;trustServerCertificate=true;" />
+      <property name="hibernate.hbm2ddl.auto" value="update" />
+    </properties>
+  </persistence-unit>
+
+  <persistence-unit name="postgresql-unit" transaction-type="RESOURCE_LOCAL">
+    <class>org.example.vetapp.model.Vet</class>
+    <properties>
+      <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver" />
+      <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/vetapp" />
+      <property name="jakarta.persistence.jdbc.user" value="postgres" />
+      <property name="jakarta.persistence.jdbc.password" value="Beni-12345" />
+      <property name="hibernate.hbm2ddl.auto" value="update" />
+    </properties>
+  </persistence-unit>
+
+  <persistence-unit name="oracle-unit" transaction-type="RESOURCE_LOCAL">
+    <class>org.example.vetapp.model.VeterinaryClinic</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
+      <property name="javax.persistence.jdbc.user" value="C##vetapp"/>
+      <property name="javax.persistence.jdbc.password" value="password"/>
+      <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+    </properties>
+  </persistence-unit>
+
+</persistence>
