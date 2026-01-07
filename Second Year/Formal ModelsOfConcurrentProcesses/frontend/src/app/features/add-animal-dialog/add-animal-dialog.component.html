@@ -1,0 +1,49 @@
+<div class="add-animal">
+  <h3>Add animal</h3>
+  <form [formGroup]="animalForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" required />
+      <mat-error *ngIf="animalForm.get('name')?.hasError('required')">
+        Name is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Species</mat-label>
+      <input matInput formControlName="species" required />
+      <mat-error *ngIf="animalForm.get('species')?.hasError('required')">
+        Species is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Gender</mat-label>
+      <input matInput formControlName="gender" required />
+      <mat-error *ngIf="animalForm.get('gender')?.hasError('required')">
+        Gender is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Birth Date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        formControlName="birthDate"
+        required
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="animalForm.get('birthDate')?.hasError('required')">
+        Birth Date is required
+      </mat-error>
+    </mat-form-field>
+
+
+    <button type="submit">Add Animal</button>
+    <div *ngIf="formSubmitted && animalForm.invalid">
+      All the fields are required.
+    </div>
+  </form>
+</div>

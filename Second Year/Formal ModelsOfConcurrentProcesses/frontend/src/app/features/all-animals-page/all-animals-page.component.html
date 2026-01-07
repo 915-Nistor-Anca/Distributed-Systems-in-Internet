@@ -1,0 +1,148 @@
+<div class="all-animals-page">
+  <div class="animal-pics">
+    <img src="assets//animal4.jpg" alt="Animal 4" />
+    <img src="assets//animal5.jpg" alt="Animal 5" />
+    <img src="assets//animal6.jpg" alt="Animal 6" />
+    <img src="assets//animal7.jpg" alt="Animal 7" />
+    <img src="assets//animal8.jpg" alt="Animal 8" />
+  </div>
+  <div class="title-button-section">
+    <h2>All Animals</h2>
+    <div class="add-animal">
+      <button (click)="viewAddAnimalDialog()">Add Animal</button>
+    </div>
+  </div>
+  <div class="animals">
+    <p>All animals</p>
+    <div *ngIf="animalResult$ | async as animalResult">
+      <ng-container *ngIf="animalResult.items.length > 0; else noAnimals">
+        <table mat-table [dataSource]="animalResult.items">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let animal; let i = dataIndex">
+              <div
+                *ngIf="
+                  isEditMode && editedAnimal && animal.id == editedAnimal.id;
+                  else staticName
+                "
+              >
+                <input
+                  matInput
+                  [(ngModel)]="editedAnimal.name"
+                  placeholder="Name"
+                />
+              </div>
+              <ng-template #staticName>
+                {{ animal.name }}
+              </ng-template>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="species">
+            <th mat-header-cell *matHeaderCellDef>Species</th>
+            <td mat-cell *matCellDef="let animal; let i = dataIndex">
+              <div
+                *ngIf="
+                  isEditMode && editedAnimal && animal.id == editedAnimal.id;
+                  else staticPreparationSteps
+                "
+              >
+                <input
+                  matInput
+                  [(ngModel)]="editedAnimal.species"
+                  placeholder="Species"
+                />
+              </div>
+              <ng-template #staticPreparationSteps>
+                {{ animal.species }}
+              </ng-template>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="gender">
+            <th mat-header-cell *matHeaderCellDef>Gender</th>
+            <td mat-cell *matCellDef="let animal; let i = dataIndex">
+              <div
+                *ngIf="
+                  isEditMode && editedAnimal && animal.id == editedAnimal.id;
+                  else staticGender
+                "
+              >
+                <input
+                  matInput
+                  [(ngModel)]="editedAnimal.gender"
+                  placeholder="Gender"
+                />
+              </div>
+              <ng-template #staticGender>
+                {{ animal.gender }}
+              </ng-template>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="birthDate">
+            <th mat-header-cell *matHeaderCellDef>Birth date</th>
+            <td mat-cell *matCellDef="let animal; let i = dataIndex">
+              <div
+                class="birthDate"
+                *ngIf="
+                  isEditMode && editedAnimal && animal.id == editedAnimal.id;
+                  else staticBirthDate
+                "
+              >
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  [(ngModel)]="editedAnimal.birthDate"
+                  placeholder="Choose date"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </div>
+              <ng-template #staticBirthDate>
+                {{ animal.birthDate | date }}
+              </ng-template>
+            </td>
+          </ng-container>       
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let animal; let i = dataIndex">
+              <button *ngIf="!isEditMode" (click)="editAnimal(animal, i)">
+                Edit
+              </button>
+              <button
+                *ngIf="
+                  isEditMode && editedAnimal && animal.id == editedAnimal.id
+                "
+                (click)="saveAnimal()"
+              >
+                Save
+              </button>
+              <button *ngIf="!isEditMode" (click)="deleteAnimal(animal.id)">
+                Delete
+              </button>
+              <button
+                *ngIf="
+                  isEditMode && editedAnimal && animal.id == editedAnimal.id
+                "
+                (click)="cancelEdit()"
+              >
+                Cancel
+              </button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="animalColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: animalColumns"></tr>
+        </table>
+      </ng-container>
+      <ng-template #noAnimals>
+        <p>No animals added.</p>
+      </ng-template>
+      <mat-paginator
+        [length]="(animalResult$ | async)?.totalCount"
+        showFirstLastButtons="true"
+        [pageSizeOptions]="[5, 10, 25]"
+      ></mat-paginator>
+    </div>
+  </div>
+</div>
