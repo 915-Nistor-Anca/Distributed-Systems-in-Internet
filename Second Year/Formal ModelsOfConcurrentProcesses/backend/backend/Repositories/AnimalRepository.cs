@@ -33,13 +33,13 @@ namespace backend.Repositories
 
         public async Task<ICollection<Animal>> GetAllAnimalsAsync(int pageNumber, int pageSize)
         {
-            var animals = await _context.Animals.AsNoTracking().Skip((pageNumber - 1)*pageSize).Take(pageSize).ToListAsync();
+            var animals = await _context.Animals.AsNoTracking().Include(a => a.Owner).Include(a => a.Species).Skip((pageNumber - 1)*pageSize).Take(pageSize).ToListAsync();
             return animals;
         }
 
         public async Task<Animal> GetAnimalByIdAsync(int animalId)
         {
-            var animal = await _context.Animals.AsNoTracking().FirstOrDefaultAsync(x => x.Id == animalId);
+            var animal = await _context.Animals.AsNoTracking().Include(a => a.Owner).Include(a => a.Species).FirstOrDefaultAsync(x => x.Id == animalId);
             return animal;
         }
 

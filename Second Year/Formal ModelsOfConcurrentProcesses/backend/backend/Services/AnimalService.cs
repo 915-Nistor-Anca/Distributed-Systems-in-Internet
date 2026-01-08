@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using backend.Models;
 using backend.Repositories;
+using Microsoft.EntityFrameworkCore;
+using System;
+using backend.Validators;
 
 namespace backend.Services
 {
@@ -13,12 +16,24 @@ namespace backend.Services
             _animalRepository = animalRepository;
             _mapper = mapper;
         }
-        public async Task<int> AddAnimalAsync(AnimalDto animal)
+        public async Task<int> AddAnimalAsync(AnimalUpdateDto animalDto)
         {
+            var animal = new Animal
+            {
+                Name = animalDto.Name,
+                Gender = animalDto.Gender,
+                BirthDate = animalDto.BirthDate,
+                SpeciesId = animalDto.SpeciesId, 
+                OwnerId = animalDto.OwnerId    
+            };
+
+            AnimalValidator.Validate(animal);
+
             var mappedAnimal = _mapper.Map<Animal>(animal);
             var animalId = await _animalRepository.AddAnimalAsync(mappedAnimal);
             return animalId;
         }
+
         public async Task DeleteAnimalByIdAsync(int animalId)
         {
             await _animalRepository.DeleteAnimalByIdAsync(animalId);
@@ -39,7 +54,7 @@ namespace backend.Services
             var mappedAnimal = _mapper.Map<AnimalDto>(animal);
             return mappedAnimal;
         }
-        public async Task UpdateAnimalAsync(AnimalDto animal)
+        public async Task UpdateAnimalAsync(AnimalUpdateDto animal)
         {
             var mappedAnimal = _mapper.Map<Animal>(animal);
             await _animalRepository.UpdateAnimalAsync(mappedAnimal);

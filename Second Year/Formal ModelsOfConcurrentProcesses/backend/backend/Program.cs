@@ -15,7 +15,9 @@ builder.Services.AddDbContext<VeterinaryClinicDbContext>(dbContextOptions =>
     dbContextOptions.UseSqlServer(builder.Configuration["ConnectionStrings:VeterinaryClinicDb"]));
 
 builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();
+builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
 builder.Services.AddScoped<IAnimalService, AnimalService>();
+builder.Services.AddScoped<IOwnerService, OwnerService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddCors(options =>
@@ -31,7 +33,6 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Use CORS BEFORE routing/authorization
 app.UseCors("AllowFrontend");
 
 if (app.Environment.IsDevelopment())

@@ -25,16 +25,15 @@ namespace backend.Controllers
             return Ok(animal);
         }
 
-
         [HttpPost]
-        public async Task<ActionResult> AddAnimal(AnimalDto animal)
+        public async Task<ActionResult> AddAnimal(AnimalUpdateDto animal)
         {
             var animalId = await _animalService.AddAnimalAsync(animal);
             return Ok(animalId);
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateAnimal(AnimalDto animal)
+        public async Task<ActionResult> UpdateCreateAnimal(AnimalUpdateDto animal)
         {
             await _animalService.UpdateAnimalAsync(animal);
             return NoContent();

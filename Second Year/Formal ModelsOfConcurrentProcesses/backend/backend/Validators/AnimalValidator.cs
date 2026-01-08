@@ -8,10 +8,6 @@ namespace backend.Validators
         {
             if (string.IsNullOrWhiteSpace(animal.Name))
                 throw new ArgumentException("Name is required.");
-
-            if (string.IsNullOrWhiteSpace(animal.Species))
-                throw new ArgumentException("Species is required.");
-
             if (string.IsNullOrWhiteSpace(animal.Gender))
                 throw new ArgumentException("Gender is required.");
             else if (animal.Gender != "M" && animal.Gender != "F")

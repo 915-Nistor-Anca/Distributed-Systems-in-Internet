@@ -9,5 +9,7 @@ namespace backend
             : base(options) { }
 
         public DbSet<Animal> Animals { get; set; }
+        public DbSet<Owner> Owners { get; set; }
+        public DbSet<Species> Species { get; set; }
     }
 }
