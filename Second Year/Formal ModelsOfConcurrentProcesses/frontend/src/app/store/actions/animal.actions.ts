@@ -80,3 +80,18 @@ export const GET_ALL_ANIMALS_FAILURE = createAction(
   '[Animal] Get All Animals Failure',
   props<{ error: string }>()
 );
+
+export const SEARCH_ANIMAL_NAME = createAction(
+  '[Animal] Search Animal Name',
+  props<{name: string}>()
+)
+
+export const SEARCH_ANIMAL_NAME_SUCCESS = createAction(
+  '[Animal] Search Animal Name Success',
+  props<{ animalResult: AnimalResult }>()
+)
+
+export const SEARCH_ANIMAL_NAME_FAILURE = createAction(
+  '[Animal] Search Animal Name Failure',
+  props<{ error: string }>()
+)

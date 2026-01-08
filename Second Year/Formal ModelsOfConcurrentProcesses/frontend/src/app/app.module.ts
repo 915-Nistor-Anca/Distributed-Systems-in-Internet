@@ -51,6 +51,7 @@ import { SpecieEffects } from './store/effects/specie.effects';
     MatCheckboxModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    MatInputModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
     StoreModule.forFeature('animal', ANIMAL_REDUCER),

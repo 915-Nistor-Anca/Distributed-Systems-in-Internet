@@ -37,4 +37,8 @@ export class AnimalService {
   updateAnimal(animal: UpdateAnimal): Observable<Animal> {
     return this.httpClient.put<Animal>(`${this.apiUrl}/Animal`, animal);
   }
+
+  searchAnimal(name: string): Observable<AnimalResult>{
+    return this.httpClient.get<AnimalResult>(`${this.apiUrl}/Animal/search/?name=${name}`);
+  }
 }

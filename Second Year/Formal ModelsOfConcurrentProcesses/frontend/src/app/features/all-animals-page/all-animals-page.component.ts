@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AddAnimalDialogComponent } from '../add-animal-dialog/add-animal-dialog.component';
 import { Animal, AnimalResult, UpdateAnimal } from '../models/animal.models';
-import { DELETE_ANIMAL, GET_ALL_ANIMALS, UPDATE_ANIMAL } from 'src/app/store/actions/animal.actions';
+import { DELETE_ANIMAL, GET_ALL_ANIMALS, SEARCH_ANIMAL_NAME, UPDATE_ANIMAL } from 'src/app/store/actions/animal.actions';
 import { SELECT_ANIMAL_RESULT } from 'src/app/store/selectors/animal.selectors';
 import { OwnerResult } from '../models/owner.models';
 import { SpeciesResult } from '../models/species.models';
@@ -119,4 +119,25 @@ export class AllAnimalsPageComponent implements AfterViewInit {
   viewAddAnimalDialog(): void {
     this.dialog.open(AddAnimalDialogComponent);
   }
+
+  searchName: string = '';
+
+onSearchNameChange(value: string): void {
+  this.searchName = value;
+
+  this.store.dispatch(SEARCH_ANIMAL_NAME({ name: this.searchName }));
+  if (this.paginator) {
+    this.paginator.pageIndex = 1;
+  }
+}
+
+clearSearch(): void {
+  this.searchName = '';
+  this.store.dispatch(SEARCH_ANIMAL_NAME({ name: '' }));
+
+  if (this.paginator) {
+    this.paginator.pageIndex = 1;
+  }
+}
+
 }

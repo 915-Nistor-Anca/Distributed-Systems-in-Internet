@@ -1,5 +1,4 @@
 import { Animal, AnimalResult } from 'src/app/features/models/animal.models';
-import { Species } from 'src/app/features/models/species.models';
 import { createReducer, on } from '@ngrx/store';
 import {
   ADD_ANIMAL_FAILURE,
@@ -10,6 +9,8 @@ import {
   GET_ALL_ANIMALS_SUCCESS,
   GET_ANIMAL_FAILURE,
   GET_ANIMAL_SUCCESS,
+  SEARCH_ANIMAL_NAME_FAILURE,
+  SEARCH_ANIMAL_NAME_SUCCESS,
   UPDATE_ANIMAL_FAILURE,
   UPDATE_ANIMAL_SUCCESS,
 } from '../actions/animal.actions';
@@ -18,6 +19,7 @@ export interface IAnimalState {
   animalResult: AnimalResult;
   animal: Animal;
   error: string;
+ // searchedAnimals: AnimalResult;
 }
 
 export const INITIAL_STATE: IAnimalState = {
@@ -33,6 +35,10 @@ export const INITIAL_STATE: IAnimalState = {
     birthDate: new Date(),
     owner: {id: 0, name: '', phoneNumber: ''}
   },
+  // searchedAnimals: {
+  //    items: [],
+  //   totalCount: 0,
+  // },
   error: '',
 };
 
@@ -92,5 +98,13 @@ export const ANIMAL_REDUCER = createReducer(
   on(DELETE_ANIMAL_FAILURE, (state: IAnimalState, { error }) => ({
     ...state,
     error: error,
-  }))
+  })),
+on(SEARCH_ANIMAL_NAME_SUCCESS, (state: IAnimalState, {animalResult})=>({
+  ...state,
+  animalResult
+})),
+on(SEARCH_ANIMAL_NAME_FAILURE, (state: IAnimalState, { error }) => ({
+    ...state,
+    error: error,
+  })),
 );

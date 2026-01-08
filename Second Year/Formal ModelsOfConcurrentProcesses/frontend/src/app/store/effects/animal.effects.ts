@@ -15,6 +15,9 @@ import {
   GET_ANIMAL,
   GET_ANIMAL_FAILURE,
   GET_ANIMAL_SUCCESS,
+  SEARCH_ANIMAL_NAME,
+  SEARCH_ANIMAL_NAME_FAILURE,
+  SEARCH_ANIMAL_NAME_SUCCESS,
   UPDATE_ANIMAL,
   UPDATE_ANIMAL_FAILURE,
   UPDATE_ANIMAL_SUCCESS,
@@ -29,7 +32,7 @@ export class AnimalEffects {
     private actions$: Actions,
     private animalService: AnimalService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   addAnimal$ = createEffect(() =>
     this.actions$.pipe(
@@ -42,7 +45,7 @@ export class AnimalEffects {
           }),
           catchError((error: HttpErrorResponse) => {
             const message =
-            error.error?.message || error.message || 'Server error';
+              error.error?.message || error.message || 'Server error';
             this.toastr.error(
               `An error occurred while saving the animal: ${message}`
             );
@@ -53,7 +56,7 @@ export class AnimalEffects {
     )
   );
 
-  getAllAnimals = createEffect(() =>
+  getAllAnimals$ = createEffect(() =>
     this.actions$.pipe(
       ofType(GET_ALL_ANIMALS),
       switchMap(({ animalPagination }) =>
@@ -63,7 +66,7 @@ export class AnimalEffects {
           ),
           catchError((error: HttpErrorResponse) => {
             const message =
-            error.error?.message || error.message || 'Server error';
+              error.error?.message || error.message || 'Server error';
             this.toastr.error(
               `An error occurred while fetching the animals: ${message}`
             );
@@ -82,7 +85,7 @@ export class AnimalEffects {
           map((animal: Animal) => GET_ANIMAL_SUCCESS({ animal })),
           catchError((error: HttpErrorResponse) => {
             const message =
-            error.error?.message || error.message || 'Server error';
+              error.error?.message || error.message || 'Server error';
             this.toastr.error(
               `An error occurred while fetching the animal: ${message}`
             );
@@ -104,7 +107,7 @@ export class AnimalEffects {
           }),
           catchError((error: HttpErrorResponse) => {
             const message =
-            error.error?.message || error.message || 'Server error';
+              error.error?.message || error.message || 'Server error';
             this.toastr.error(
               `An error occurred while deleting the animal: ${message}`
             );
@@ -134,4 +137,19 @@ export class AnimalEffects {
       )
     )
   );
+
+  searchAnimal$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SEARCH_ANIMAL_NAME),
+      switchMap(({ name }) => this.animalService.searchAnimal(name).pipe(
+        map((animalResult: AnimalResult) => {
+          return SEARCH_ANIMAL_NAME_SUCCESS({ animalResult })
+        }),
+        catchError((error: string) => {
+          this.toastr.error(
+            `An error occurred while searching the animal: ${error}`
+          );
+          return of(SEARCH_ANIMAL_NAME_FAILURE({ error }));
+        })))
+    ))
 }

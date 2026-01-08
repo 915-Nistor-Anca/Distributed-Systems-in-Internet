@@ -60,5 +60,22 @@ namespace backend.Services
             var updated = await _animalRepository.UpdateAnimalAsync(mappedAnimal);
             return updated;
         }
+
+        public async Task<PagedResult<Animal>> SearchByNameAsync(string name)
+        {
+            var number = await _animalRepository.GetTotalNumberOfAnimalsAsync();
+
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return new PagedResult<Animal> { Items = await _animalRepository.GetAllAnimalsAsync(1, 10) , TotalCount = number };
+            }
+
+            name = name.Trim().ToLower();
+            var allAnimals = await _animalRepository.GetAllAnimalsAsync(1, number);
+
+            var result = allAnimals.Where(a => a.Name != null && a.Name.ToLower().Contains(name)).ToList();
+
+            return new PagedResult<Animal> { Items = result, TotalCount = result.Count};
+        }
     }
 }

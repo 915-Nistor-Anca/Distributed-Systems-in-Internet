@@ -52,5 +52,12 @@ namespace backend.Controllers
             var animals = await _animalService.GetAllAnimalsAsync(pageNumber, pageSize);
             return Ok(animals);
         }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchByName([FromQuery] string? name)
+        {
+            var animals = await _animalService.SearchByNameAsync(name);
+            return Ok(animals);
+        }
     }
 }
