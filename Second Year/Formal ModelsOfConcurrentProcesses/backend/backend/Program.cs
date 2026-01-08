@@ -16,8 +16,10 @@ builder.Services.AddDbContext<VeterinaryClinicDbContext>(dbContextOptions =>
 
 builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();
 builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
+builder.Services.AddScoped<ISpeciesRepository, SpeciesRepository>();
 builder.Services.AddScoped<IAnimalService, AnimalService>();
 builder.Services.AddScoped<IOwnerService, OwnerService>();
+builder.Services.AddScoped<ISpeciesService, SpeciesService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddCors(options =>
