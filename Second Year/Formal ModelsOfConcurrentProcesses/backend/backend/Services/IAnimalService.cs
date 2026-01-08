@@ -8,7 +8,7 @@ namespace backend.Services
         Task<Animal> UpdateAnimalAsync(AnimalUpdateDto animal);
         Task<AnimalDto> GetAnimalByIdAsync(int animalId);
         Task DeleteAnimalByIdAsync(int animalId);
-        Task<PagedResult<AnimalDto>> GetAllAnimalsAsync(int pageNumber, int pageSize);
+        Task<PagedResult<AnimalDto>> GetAllAnimalsAsync(int pageNumber, int pageSize, int? specieId);
         Task<PagedResult<Animal>> SearchByNameAsync(string name);
     }
 }

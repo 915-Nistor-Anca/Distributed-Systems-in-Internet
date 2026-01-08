@@ -36,6 +36,7 @@ export class AllAnimalsPageComponent implements AfterViewInit {
   isEditMode: true | false = false;
   editedAnimal: Animal | null = null;
   editedRowId: number | null = null;
+  selectedSpeciesId: number | null = null;
 
   constructor(private store: Store) {
     this.animalResult$ = this.store.select(SELECT_ANIMAL_RESULT);
@@ -76,6 +77,7 @@ export class AllAnimalsPageComponent implements AfterViewInit {
           pageNumber: this.paginator.pageIndex + 1,
           pageSize: this.paginator.pageSize,
         },
+        speciesId: null
       })
     );
   }
@@ -138,6 +140,18 @@ clearSearch(): void {
   if (this.paginator) {
     this.paginator.pageIndex = 1;
   }
+}
+
+onSpeciesChange(): void {
+this.store.dispatch(
+      GET_ALL_ANIMALS({
+        animalPagination: {
+          pageNumber: 1,
+          pageSize: 100,
+        },
+        speciesId: this.selectedSpeciesId
+      })
+    );
 }
 
 }

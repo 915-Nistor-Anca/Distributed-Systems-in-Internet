@@ -38,14 +38,20 @@ namespace backend.Services
         {
             await _animalRepository.DeleteAnimalByIdAsync(animalId);
         }
-        public async Task<PagedResult<AnimalDto>> GetAllAnimalsAsync(int pageNumber, int pageSize)
+        public async Task<PagedResult<AnimalDto>> GetAllAnimalsAsync(int pageNumber, int pageSize, int? speciesId)
         {
             var animals = await _animalRepository.GetAllAnimalsAsync(pageNumber, pageSize);
+            
+            if (speciesId.HasValue)
+            {
+                animals = animals.Where(a => a.Species.Id == speciesId.Value).ToList();
+            }
+
             var mappedAnimals = _mapper.Map<ICollection<AnimalDto>>(animals);
             return new PagedResult<AnimalDto>
             {
                 Items = mappedAnimals,
-                TotalCount = await _animalRepository.GetTotalNumberOfAnimalsAsync()
+                TotalCount = animals.Count()
             };
         }
         public async Task<AnimalDto> GetAnimalByIdAsync(int animalId)

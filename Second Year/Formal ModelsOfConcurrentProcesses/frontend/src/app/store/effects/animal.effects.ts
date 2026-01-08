@@ -59,8 +59,8 @@ export class AnimalEffects {
   getAllAnimals$ = createEffect(() =>
     this.actions$.pipe(
       ofType(GET_ALL_ANIMALS),
-      switchMap(({ animalPagination }) =>
-        this.animalService.getAllAnimals(animalPagination).pipe(
+      switchMap(({ animalPagination, speciesId }) =>
+        this.animalService.getAllAnimals(animalPagination, speciesId).pipe(
           map((animalResult: AnimalResult) =>
             GET_ALL_ANIMALS_SUCCESS({ animalResult })
           ),
