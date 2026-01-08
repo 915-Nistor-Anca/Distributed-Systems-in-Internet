@@ -7,6 +7,12 @@ import { AddAnimalDialogComponent } from '../add-animal-dialog/add-animal-dialog
 import { Animal, AnimalResult } from '../models/animal.models';
 import { DELETE_ANIMAL, GET_ALL_ANIMALS, UPDATE_ANIMAL } from 'src/app/store/actions/animal.actions';
 import { SELECT_ANIMAL_RESULT } from 'src/app/store/selectors/animal.selectors';
+import { OwnerResult } from '../models/owner.models';
+import { SpeciesResult } from '../models/species.models';
+import { SELECT_OWNERS_RESULT } from 'src/app/store/selectors/owner.selectors';
+import { SELECT_SPECIES_RESULT } from 'src/app/store/selectors/species.selectors';
+import { GET_ALL_OWNERS } from 'src/app/store/actions/owner.actions';
+import { GET_ALL_SPECIES } from 'src/app/store/actions/species.actions';
 
 @Component({
   selector: 'app-all-animals-page',
@@ -17,11 +23,14 @@ export class AllAnimalsPageComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   dialog: MatDialog = inject(MatDialog);
   animalResult$: Observable<AnimalResult>;
+  ownerResult$: Observable<OwnerResult>;
+  speciesResult$: Observable<SpeciesResult>;
   animalColumns: string[] = [
     'name',
     'species',
     'gender',
     'birthDate',
+    'owner',
     'actions',
   ];
   isEditMode: true | false = false;
@@ -30,11 +39,29 @@ export class AllAnimalsPageComponent implements AfterViewInit {
 
   constructor(private store: Store) {
     this.animalResult$ = this.store.select(SELECT_ANIMAL_RESULT);
+    this.ownerResult$ = this.store.select(SELECT_OWNERS_RESULT);
+    this.speciesResult$ = this.store.select(SELECT_SPECIES_RESULT);
   }
 
   ngAfterViewInit() {
     this.paginator.pageIndex = 0;
     this.paginator.pageSize = 5;
+    this.store.dispatch(
+      GET_ALL_OWNERS({
+        ownerPagination:{
+          pageNumber: 1,
+          pageSize: 100
+        }
+      })
+    )
+    this.store.dispatch(
+      GET_ALL_SPECIES({
+        speciesPagination: {
+          pageNumber: 1,
+          pageSize: 100
+        }
+      })
+    )
     this.setPagination();
     this.paginator.page.subscribe(() => {
       this.setPagination();

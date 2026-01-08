@@ -1,4 +1,5 @@
 import { Animal, AnimalResult } from 'src/app/features/models/animal.models';
+import { Species } from 'src/app/features/models/species.models';
 import { createReducer, on } from '@ngrx/store';
 import {
   ADD_ANIMAL_FAILURE,
@@ -27,9 +28,10 @@ export const INITIAL_STATE: IAnimalState = {
   animal: {
     id: 0,
     name: '',
-    species: '',
+    species: {id: 0, name: '', isExotic: false},
     gender: '',
     birthDate: new Date(),
+    owner: {id: 0, name: '', phoneNumber: ''}
   },
   error: '',
 };

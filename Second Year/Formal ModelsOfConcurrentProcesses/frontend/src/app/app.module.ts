@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { StoreModule } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +21,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { AddAnimalDialogComponent } from './features/add-animal-dialog/add-animal-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { SPECIES_REDUCER } from './store/reducers/owner.reducers';
+import { OWNERS_REDUCER } from './store/reducers/species.effects';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     ReactiveFormsModule,
     ToastrModule.forRoot(),
     StoreModule.forFeature('animal', ANIMAL_REDUCER),
+    StoreModule.forFeature('species', SPECIES_REDUCER),
+    StoreModule.forFeature('owners', OWNERS_REDUCER),
     EffectsModule.forFeature([AnimalEffects]),
     StoreModule.forRoot({}, {}),
     EffectsModule.forRoot([]),

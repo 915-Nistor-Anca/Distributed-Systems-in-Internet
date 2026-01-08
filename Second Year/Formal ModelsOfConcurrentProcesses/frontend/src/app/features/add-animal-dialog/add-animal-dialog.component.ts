@@ -21,6 +21,7 @@ export class AddAnimalDialogComponent {
       species: ['', Validators.required],
       gender: ['', Validators.required],
       birthDate: ['', Validators.required],
+      owner: ['', Validators.required]
     });
   }
 
@@ -30,9 +31,10 @@ export class AddAnimalDialogComponent {
       const animal: Animal = {
         id: 0,
         name: this.animalForm.value.name,
-        species: this.animalForm.value.species,
+        species: this.animalForm.value.species.id,
         gender: this.animalForm.value.gender,
         birthDate: this.animalForm.value.birthDate,
+        owner: this.animalForm.value.owner.id
       };
       this.store.dispatch(ADD_ANIMAL({ animal }));
       this.dialogRef.close();
