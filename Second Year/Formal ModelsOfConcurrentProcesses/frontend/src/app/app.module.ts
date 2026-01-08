@@ -23,6 +23,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SPECIES_REDUCER } from './store/reducers/owner.reducers';
 import { OWNERS_REDUCER } from './store/reducers/species.effects';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { OwnerEffects } from './store/effects/owner.effects';
+import { SpecieEffects } from './store/effects/specie.effects';
 
 @NgModule({
   declarations: [
@@ -40,6 +44,8 @@ import { OWNERS_REDUCER } from './store/reducers/species.effects';
     HttpClientModule,
     FormsModule,
     MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatCheckboxModule,
@@ -50,7 +56,7 @@ import { OWNERS_REDUCER } from './store/reducers/species.effects';
     StoreModule.forFeature('animal', ANIMAL_REDUCER),
     StoreModule.forFeature('species', SPECIES_REDUCER),
     StoreModule.forFeature('owners', OWNERS_REDUCER),
-    EffectsModule.forFeature([AnimalEffects]),
+    EffectsModule.forFeature([AnimalEffects, OwnerEffects, SpecieEffects]),
     StoreModule.forRoot({}, {}),
     EffectsModule.forRoot([]),
   ],

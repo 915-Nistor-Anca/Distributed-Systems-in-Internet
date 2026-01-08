@@ -2,8 +2,15 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { Animal } from '../models/animal.models';
+import { Animal, UpdateAnimal } from '../models/animal.models';
 import { ADD_ANIMAL } from 'src/app/store/actions/animal.actions';
+import { OwnerResult } from '../models/owner.models';
+import { SpeciesResult } from '../models/species.models';
+import { Observable } from 'rxjs';
+import { SELECT_OWNERS_RESULT } from 'src/app/store/selectors/owner.selectors';
+import { SELECT_SPECIES_RESULT } from 'src/app/store/selectors/species.selectors';
+import { GET_ALL_OWNERS } from 'src/app/store/actions/owner.actions';
+import { GET_ALL_SPECIES } from 'src/app/store/actions/species.actions';
 
 @Component({
   selector: 'app-add-animal-dialog',
@@ -15,27 +22,44 @@ export class AddAnimalDialogComponent {
   animalForm: FormGroup;
   formSubmitted: boolean = false;
 
+  ownerResult$: Observable<OwnerResult>;
+  speciesResult$: Observable<SpeciesResult>;
+
   constructor(private formBuilder: FormBuilder, private store: Store) {
+    this.ownerResult$ = this.store.select(SELECT_OWNERS_RESULT);
+    this.speciesResult$ = this.store.select(SELECT_SPECIES_RESULT);
+
+    this.store.dispatch(GET_ALL_OWNERS({ ownerPagination: { pageNumber: 1, pageSize: 100 } }));
+    this.store.dispatch(GET_ALL_SPECIES({ speciesPagination: { pageNumber: 1, pageSize: 100 } }));
+
     this.animalForm = this.formBuilder.group({
       name: ['', Validators.required],
-      species: ['', Validators.required],
+      species: [null, Validators.required],
       gender: ['', Validators.required],
-      birthDate: ['', Validators.required],
-      owner: ['', Validators.required]
+      birthDate: [null, Validators.required],
+      owner: [null, Validators.required]  
     });
+  }
+
+  compareById(a: any, b: any): boolean {
+    return a && b ? a.id === b.id : a === b;
   }
 
   onSubmit(): void {
     this.formSubmitted = true;
+
     if (this.animalForm.valid) {
-      const animal: Animal = {
-        id: 0,
-        name: this.animalForm.value.name,
-        species: this.animalForm.value.species.id,
-        gender: this.animalForm.value.gender,
-        birthDate: this.animalForm.value.birthDate,
-        owner: this.animalForm.value.owner.id
+      const formValue = this.animalForm.value;
+
+      const animal: UpdateAnimal = {
+        id: 0, 
+        name: formValue.name,
+        speciesId: formValue.species.id,
+        gender: formValue.gender,
+        birthDate: formValue.birthDate,
+        ownerId: formValue.owner.id
       };
+
       this.store.dispatch(ADD_ANIMAL({ animal }));
       this.dialogRef.close();
     } else {

@@ -24,6 +24,7 @@ export class OwnerService {
   }
 
   getAllOwners(ownerPagination: OwnerPagination): Observable<OwnerResult> {
+    console.log("get all owners")
     return this.httpClient.get<OwnerResult>(`${this.apiUrl}/Owner`, {
       params: ownerPagination,
     });

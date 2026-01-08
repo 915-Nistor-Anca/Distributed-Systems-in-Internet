@@ -38,11 +38,11 @@ export const INITIAL_STATE: IAnimalState = {
 
 export const ANIMAL_REDUCER = createReducer(
   INITIAL_STATE,
-  on(ADD_ANIMAL_SUCCESS, (state: IAnimalState, { animalId, animal }) => ({
+  on(ADD_ANIMAL_SUCCESS, (state: IAnimalState, { animal }) => ({
     ...state,
     animalResult: {
       ...state.animalResult,
-      items: [...state.animalResult.items, { ...animal, id: animalId }],
+      items: [...state.animalResult.items, { ...animal }],
       totalCount: state.animalResult.totalCount + 1,
     },
   })),

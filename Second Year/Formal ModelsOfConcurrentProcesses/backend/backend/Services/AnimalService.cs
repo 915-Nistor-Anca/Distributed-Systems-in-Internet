@@ -16,7 +16,7 @@ namespace backend.Services
             _animalRepository = animalRepository;
             _mapper = mapper;
         }
-        public async Task<int> AddAnimalAsync(AnimalUpdateDto animalDto)
+        public async Task<Animal> AddAnimalAsync(AnimalUpdateDto animalDto)
         {
             var animal = new Animal
             {
@@ -30,8 +30,8 @@ namespace backend.Services
             AnimalValidator.Validate(animal);
 
             var mappedAnimal = _mapper.Map<Animal>(animal);
-            var animalId = await _animalRepository.AddAnimalAsync(mappedAnimal);
-            return animalId;
+            var addedAnimal = await _animalRepository.AddAnimalAsync(mappedAnimal);
+            return addedAnimal;
         }
 
         public async Task DeleteAnimalByIdAsync(int animalId)
@@ -54,10 +54,11 @@ namespace backend.Services
             var mappedAnimal = _mapper.Map<AnimalDto>(animal);
             return mappedAnimal;
         }
-        public async Task UpdateAnimalAsync(AnimalUpdateDto animal)
+        public async Task<Animal> UpdateAnimalAsync(AnimalUpdateDto animal)
         {
             var mappedAnimal = _mapper.Map<Animal>(animal);
-            await _animalRepository.UpdateAnimalAsync(mappedAnimal);
+            var updated = await _animalRepository.UpdateAnimalAsync(mappedAnimal);
+            return updated;
         }
     }
 }

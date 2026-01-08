@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AddAnimalDialogComponent } from '../add-animal-dialog/add-animal-dialog.component';
-import { Animal, AnimalResult } from '../models/animal.models';
+import { Animal, AnimalResult, UpdateAnimal } from '../models/animal.models';
 import { DELETE_ANIMAL, GET_ALL_ANIMALS, UPDATE_ANIMAL } from 'src/app/store/actions/animal.actions';
 import { SELECT_ANIMAL_RESULT } from 'src/app/store/selectors/animal.selectors';
 import { OwnerResult } from '../models/owner.models';
@@ -44,16 +44,15 @@ export class AllAnimalsPageComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.paginator.pageIndex = 0;
-    this.paginator.pageSize = 5;
     this.store.dispatch(
       GET_ALL_OWNERS({
-        ownerPagination:{
+        ownerPagination: {
           pageNumber: 1,
           pageSize: 100
         }
       })
     )
+    console.log("dispatch")
     this.store.dispatch(
       GET_ALL_SPECIES({
         speciesPagination: {
@@ -62,6 +61,8 @@ export class AllAnimalsPageComponent implements AfterViewInit {
         }
       })
     )
+    this.paginator.pageIndex = 0;
+    this.paginator.pageSize = 5;
     this.setPagination();
     this.paginator.page.subscribe(() => {
       this.setPagination();
@@ -81,13 +82,26 @@ export class AllAnimalsPageComponent implements AfterViewInit {
 
   editAnimal(animal: Animal, rowId: number): void {
     this.isEditMode = true;
-    this.editedAnimal = { ...animal };
+    this.editedAnimal = { ...animal,
+      species: {...animal.species},
+      owner: {...animal.owner}
+     };
+      console.log(this.editedAnimal)
     this.editedRowId = rowId;
   }
 
+  compareById(a: any, b: any): boolean {
+  return a && b ? a.id === b.id : a === b;
+}
+
   saveAnimal(): void {
     if (this.editedAnimal) {
-      this.store.dispatch(UPDATE_ANIMAL({ animal: this.editedAnimal }));
+      console.log(this.editedAnimal)
+      var updatedAnimal: UpdateAnimal = { id: this.editedAnimal.id,
+         name: this.editedAnimal.name, speciesId: this.editedAnimal.species.id, 
+         ownerId: this.editedAnimal.owner.id, gender: this.editedAnimal.gender,
+        birthDate: this.editedAnimal.birthDate }
+      this.store.dispatch(UPDATE_ANIMAL({ animal: updatedAnimal }));
     }
     this.cancelEdit();
   }

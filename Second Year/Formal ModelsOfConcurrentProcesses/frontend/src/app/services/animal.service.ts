@@ -5,6 +5,7 @@ import {
   Animal,
   AnimalPagination,
   AnimalResult,
+  UpdateAnimal,
 } from '../features/models/animal.models';
 
 @Injectable({
@@ -15,8 +16,8 @@ export class AnimalService {
 
   constructor(private httpClient: HttpClient) {}
 
-  addAnimal(animal: Animal): Observable<number> {
-    return this.httpClient.post<number>(`${this.apiUrl}/Animal`, animal);
+  addAnimal(animal: UpdateAnimal): Observable<Animal> {
+    return this.httpClient.post<Animal>(`${this.apiUrl}/Animal`, animal);
   }
 
   getAnimal(animalId: number): Observable<Animal> {
@@ -33,7 +34,7 @@ export class AnimalService {
     return this.httpClient.delete<void>(`${this.apiUrl}/Animal/${animalId}`);
   }
 
-  updateAnimal(animal: Animal): Observable<void> {
-    return this.httpClient.put<void>(`${this.apiUrl}/Animal`, animal);
+  updateAnimal(animal: UpdateAnimal): Observable<Animal> {
+    return this.httpClient.put<Animal>(`${this.apiUrl}/Animal`, animal);
   }
 }

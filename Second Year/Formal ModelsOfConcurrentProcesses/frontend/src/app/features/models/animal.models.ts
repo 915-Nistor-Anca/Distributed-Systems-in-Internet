@@ -10,6 +10,15 @@ export interface Animal {
   owner: Owner;
 }
 
+export interface UpdateAnimal {
+  id: number;
+  name: string;
+  gender: string;
+  birthDate: Date;
+  speciesId: number;
+  ownerId: number;
+}
+
 export type AnimalPagination = {
   pageNumber: number;
   pageSize: number;

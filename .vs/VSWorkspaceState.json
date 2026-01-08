@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Second Year",
+    "\\Second Year\\Formal ModelsOfConcurrentProcesses",
+    "\\Second Year\\Formal ModelsOfConcurrentProcesses\\backend"
   ],
-  "SelectedNode": "\\C:\\Users\\ancan\\source\\repos\\Distributed-Systems-in-Internet",
+  "SelectedNode": "\\Second Year\\Formal ModelsOfConcurrentProcesses\\backend\\backend.sln",
   "PreviewInSolutionExplorer": false
 }

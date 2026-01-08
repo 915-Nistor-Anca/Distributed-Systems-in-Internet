@@ -11,7 +11,7 @@ import { OwnerResult } from "src/app/features/models/owner.models";
 export class OwnerEffects {
   constructor(
     private actions$: Actions,
-    private OwnerService: OwnerService,
+    private ownerService: OwnerService,
     private toastr: ToastrService
   ) {}
 
@@ -19,7 +19,7 @@ export class OwnerEffects {
     this.actions$.pipe(
       ofType(GET_ALL_OWNERS),
       switchMap(({ ownerPagination }) =>
-        this.OwnerService.getAllOwners(ownerPagination).pipe(
+        this.ownerService.getAllOwners(ownerPagination).pipe(
           map((ownerResult: OwnerResult) =>
             GET_ALL_OWNERS_SUCCESS({ ownerResult })
           ),

@@ -12,12 +12,13 @@ namespace backend.Repositories
             _context = context;
         }
 
-        public async Task<int> AddAnimalAsync(Animal animal)
+        public async Task<Animal> AddAnimalAsync(Animal animal)
         {
             Validators.AnimalValidator.Validate(animal);
             await _context.Animals.AddAsync(animal);
             await _context.SaveChangesAsync();
-            return animal.Id;
+            var addedAnimal = await _context.Animals.AsNoTracking().Include(a => a.Owner).Include(a => a.Species).FirstOrDefaultAsync(x => x.Id == animal.Id);
+            return addedAnimal;
         }
 
         public async Task DeleteAnimalByIdAsync(int animalId)
@@ -43,10 +44,10 @@ namespace backend.Repositories
             return animal;
         }
 
-        public async Task UpdateAnimalAsync(Animal animal)
+        public async Task<Animal> UpdateAnimalAsync(Animal animal)
         {
             Validators.AnimalValidator.Validate(animal);
-            var existingAnimal = await _context.Animals.FindAsync(animal.Id);
+            var existingAnimal = await _context.Animals.AsNoTracking().Include(a => a.Owner).Include(a => a.Species).FirstOrDefaultAsync(x => x.Id == animal.Id);
             if (existingAnimal == null)
             {
                 throw new Exception($"Animal with id {animal.Id} not found.");
@@ -54,6 +55,8 @@ namespace backend.Repositories
             _context.Entry(existingAnimal).State = EntityState.Detached;
             _context.Animals.Update(animal);
             await _context.SaveChangesAsync();
+            existingAnimal = await _context.Animals.AsNoTracking().Include(a => a.Owner).Include(a => a.Species).FirstOrDefaultAsync(x => x.Id == animal.Id);
+            return existingAnimal;
         }
 
         public async Task<int> GetTotalNumberOfAnimalsAsync()

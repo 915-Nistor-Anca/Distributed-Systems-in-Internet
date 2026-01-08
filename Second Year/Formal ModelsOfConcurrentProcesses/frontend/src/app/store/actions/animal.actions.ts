@@ -3,16 +3,17 @@ import {
   Animal,
   AnimalPagination,
   AnimalResult,
+  UpdateAnimal,
 } from 'src/app/features/models/animal.models';
 
 export const ADD_ANIMAL = createAction(
   '[Animal] Add Animal',
-  props<{ animal: Animal }>()
+  props<{ animal: UpdateAnimal }>()
 );
 
 export const ADD_ANIMAL_SUCCESS = createAction(
   '[Animal] Add Animal Success',
-  props<{ animalId: number; animal: Animal }>()
+  props<{ animal: Animal }>()
 );
 
 export const ADD_ANIMAL_FAILURE = createAction(
@@ -22,7 +23,7 @@ export const ADD_ANIMAL_FAILURE = createAction(
 
 export const UPDATE_ANIMAL = createAction(
   '[Animal] Update Animal',
-  props<{ animal: Animal }>()
+  props<{ animal: UpdateAnimal }>()
 );
 
 export const UPDATE_ANIMAL_SUCCESS = createAction(

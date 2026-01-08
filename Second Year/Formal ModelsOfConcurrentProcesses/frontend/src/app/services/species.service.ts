@@ -12,24 +12,25 @@ export class SpecieService {
   constructor(private httpClient: HttpClient) {}
 
   addSpecie(species: Species): Observable<number> {
-    return this.httpClient.post<number>(`${this.apiUrl}/Specie`, species);
+    return this.httpClient.post<number>(`${this.apiUrl}/Species`, species);
   }
 
   getSpecie(speciesId: number): Observable<Species> {
-    return this.httpClient.get<Species>(`${this.apiUrl}/Specie/${speciesId}`);
+    return this.httpClient.get<Species>(`${this.apiUrl}/Species/${speciesId}`);
   }
 
   getAllSpecies(speciesPagination: SpeciesPagination): Observable<SpeciesResult> {
-    return this.httpClient.get<SpeciesResult>(`${this.apiUrl}/Specie`, {
+    console.log("get all species")
+    return this.httpClient.get<SpeciesResult>(`${this.apiUrl}/Species`, {
       params: speciesPagination,
     });
   }
 
   deleteSpecie(speciesId: number): Observable<void> {
-    return this.httpClient.delete<void>(`${this.apiUrl}/Specie/${speciesId}`);
+    return this.httpClient.delete<void>(`${this.apiUrl}/Species/${speciesId}`);
   }
 
   updateSpecie(species: Species): Observable<void> {
-    return this.httpClient.put<void>(`${this.apiUrl}/Specie`, species);
+    return this.httpClient.put<void>(`${this.apiUrl}/Species`, species);
   }
 }

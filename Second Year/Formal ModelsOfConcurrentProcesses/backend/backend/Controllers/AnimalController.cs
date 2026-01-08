@@ -28,15 +28,15 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<ActionResult> AddAnimal(AnimalUpdateDto animal)
         {
-            var animalId = await _animalService.AddAnimalAsync(animal);
-            return Ok(animalId);
+            var addedAnimal = await _animalService.AddAnimalAsync(animal);
+            return Ok(addedAnimal);
         }
 
         [HttpPut]
         public async Task<ActionResult> UpdateCreateAnimal(AnimalUpdateDto animal)
         {
-            await _animalService.UpdateAnimalAsync(animal);
-            return NoContent();
+            var updatedAnimal = await _animalService.UpdateAnimalAsync(animal);
+            return Ok(updatedAnimal);
         }
 
         [HttpDelete("{id}")]

@@ -36,9 +36,9 @@ export class AnimalEffects {
       ofType(ADD_ANIMAL),
       switchMap(({ animal }) =>
         this.animalService.addAnimal(animal).pipe(
-          map((animalId: number) => {
+          map((animal: Animal) => {
             this.toastr.success('The animal was successfully added!');
-            return ADD_ANIMAL_SUCCESS({ animalId, animal });
+            return ADD_ANIMAL_SUCCESS({ animal });
           }),
           catchError((error: HttpErrorResponse) => {
             const message =
@@ -120,7 +120,7 @@ export class AnimalEffects {
       ofType(UPDATE_ANIMAL),
       switchMap(({ animal }) =>
         this.animalService.updateAnimal(animal).pipe(
-          map(() => {
+          map((animal: Animal) => {
             this.toastr.success('The animal was successfully updated!');
             return UPDATE_ANIMAL_SUCCESS({ animal });
           }),
