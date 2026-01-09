@@ -12,11 +12,11 @@ namespace backend.Repositories
             _context = context;
         }
 
-        public async Task<int> AddOwnerAsync(Owner owner)
+        public async Task<Owner> AddOwnerAsync(Owner owner)
         {
             await _context.Owners.AddAsync(owner);
             await _context.SaveChangesAsync();
-            return owner.Id;
+            return owner;
         }
 
         public async Task DeleteOwnerByIdAsync(int ownerId)

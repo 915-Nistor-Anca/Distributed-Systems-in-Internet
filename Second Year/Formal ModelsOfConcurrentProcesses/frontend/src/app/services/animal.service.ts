@@ -26,12 +26,14 @@ export class AnimalService {
 
   getAllAnimals(
     animalPagination: AnimalPagination,
-    speciesId: number | null
+    speciesId: number | null,
+    sortBy: string | null
   ): Observable<AnimalResult> {
     const params = new HttpParams()
       .set('pageNumber', animalPagination.pageNumber.toString())
       .set('pageSize', animalPagination.pageSize.toString());
-    const finalParams = speciesId !== null ? params.set('speciesId', speciesId.toString()) : params;
+    var finalParams = speciesId !== null ? params.set('speciesId', speciesId.toString()) : params;
+    finalParams = sortBy !== null ? params.set('sortBy', sortBy) : finalParams;
     return this.httpClient.get<AnimalResult>(`${this.apiUrl}/Animal`, { params: finalParams });
   }
 
@@ -44,6 +46,6 @@ export class AnimalService {
   }
 
   searchAnimal(name: string): Observable<AnimalResult> {
-    return this.httpClient.get<AnimalResult>(`${this.apiUrl}/Animal/search/?name=${name}`);
+    return this.httpClient.get<AnimalResult>(`${this.apiUrl}/Animal/search?name=${name}`);
   }
 }

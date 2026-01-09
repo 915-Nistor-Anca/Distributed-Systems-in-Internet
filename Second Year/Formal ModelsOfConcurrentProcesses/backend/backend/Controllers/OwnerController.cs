@@ -29,8 +29,8 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<ActionResult> AddOwner(OwnerDto owner)
         {
-            var ownerId = await _ownerService.AddOwnerAsync(owner);
-            return Ok(ownerId);
+            var addedOwner = await _ownerService.AddOwnerAsync(owner);
+            return Ok(addedOwner);
         }
 
         [HttpPut]

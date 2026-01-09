@@ -4,7 +4,7 @@ namespace backend.Repositories
 {
     public interface IOwnerRepository
     {
-        Task<int> AddOwnerAsync(Owner owner);
+        Task<Owner> AddOwnerAsync(Owner owner);
         Task UpdateOwnerAsync(Owner owner);
         Task<Owner> GetOwnerByIdAsync(int ownerId);
         Task DeleteOwnerByIdAsync(int ownerId);

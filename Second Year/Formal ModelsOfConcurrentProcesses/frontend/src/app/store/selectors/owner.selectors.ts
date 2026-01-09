@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { IOwnerState } from "../reducers/species.effects";
+import { IOwnerState } from "../reducers/owner.reducers";
 
 export const SELECT_OWNERS_STATE =
   createFeatureSelector<IOwnerState>('owners');

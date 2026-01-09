@@ -21,12 +21,14 @@ import { ToastrModule } from 'ngx-toastr';
 import { AddAnimalDialogComponent } from './features/add-animal-dialog/add-animal-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { SPECIES_REDUCER } from './store/reducers/owner.reducers';
-import { OWNERS_REDUCER } from './store/reducers/species.effects';
+import { SPECIES_REDUCER } from './store/reducers/species.reducers';
+import { OWNERS_REDUCER } from './store/reducers/owner.reducers';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { OwnerEffects } from './store/effects/owner.effects';
 import { SpecieEffects } from './store/effects/specie.effects';
+import { OwnersPageComponent } from './features/owners-page/owners-page.component';
+import { AddOwnerDialogComponent } from './features/add-owner-dialog/add-owner-dialog.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { SpecieEffects } from './store/effects/specie.effects';
     AllAnimalsPageComponent,
     HomePageComponent,
     AddAnimalDialogComponent,
+    OwnersPageComponent,
+    AddOwnerDialogComponent,
   ],
   imports: [
     BrowserModule,

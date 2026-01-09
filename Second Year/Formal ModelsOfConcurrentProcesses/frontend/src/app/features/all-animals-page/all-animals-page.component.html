@@ -30,6 +30,14 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Sort by</mat-label>
+          <mat-select [(ngModel)]="selectedSort" (selectionChange)="onSortChange()">
+            <mat-option [value]="null">No sorting</mat-option>
+            <mat-option value="name">Name</mat-option>
+            <mat-option value="birthDate">Birth date</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
     </div>
   </div>

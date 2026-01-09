@@ -68,7 +68,7 @@ export const GET_ANIMAL_FAILURE = createAction(
 
 export const GET_ALL_ANIMALS = createAction(
   '[Animal] Get All Animals',
-  props<{ animalPagination: AnimalPagination, speciesId: number | null }>()
+  props<{ animalPagination: AnimalPagination, speciesId: number | null, sortBy: string | null }>()
 );
 
 export const GET_ALL_ANIMALS_SUCCESS = createAction(

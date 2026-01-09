@@ -4,7 +4,7 @@ namespace backend.Services
 {
     public interface IOwnerService
     {
-        Task<int> AddOwnerAsync(OwnerDto owner);
+        Task<Owner> AddOwnerAsync(OwnerDto owner);
         Task UpdateOwnerAsync(OwnerDto owner);
         Task<OwnerDto> GetOwnerByIdAsync(int ownerId);
         Task DeleteOwnerByIdAsync(int ownerId);

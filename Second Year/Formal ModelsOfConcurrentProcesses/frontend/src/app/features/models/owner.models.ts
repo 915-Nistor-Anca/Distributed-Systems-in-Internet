@@ -6,6 +6,7 @@ export interface Owner {
 
 export interface OwnerResult {
     items: Owner[];
+    totalCount: number;
 }
 
 export type OwnerPagination = {

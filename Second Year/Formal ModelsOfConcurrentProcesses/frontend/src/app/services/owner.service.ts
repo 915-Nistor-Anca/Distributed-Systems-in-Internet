@@ -15,8 +15,8 @@ export class OwnerService {
 
   constructor(private httpClient: HttpClient) {}
 
-  addOwner(owner: Owner): Observable<number> {
-    return this.httpClient.post<number>(`${this.apiUrl}/Owner`, owner);
+  addOwner(owner: Owner): Observable<Owner> {
+    return this.httpClient.post<Owner>(`${this.apiUrl}/Owner`, owner);
   }
 
   getOwner(ownerId: number): Observable<Owner> {

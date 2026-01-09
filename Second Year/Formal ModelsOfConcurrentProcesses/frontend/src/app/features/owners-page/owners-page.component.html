@@ -1,0 +1,39 @@
+<div class="all-owners-page">
+    <h2>All Owners</h2>
+    <div class="add-owner">
+        <button (click)="openAddOwnerDialog()">
+            Add Owner
+        </button>
+    </div>
+
+    <div *ngIf="ownerResult$ | async as ownerResult">
+        <ng-container *ngIf="ownerResult.items.length > 0; else noOwners">
+            <table mat-table [dataSource]="ownerResult.items">
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef>Name</th>
+                    <td mat-cell *matCellDef="let owner">
+                        {{ owner.name }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="phoneNumber">
+                    <th mat-header-cell *matHeaderCellDef>Phone number</th>
+                    <td mat-cell *matCellDef="let owner">
+                        {{ owner.phoneNumber }}
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="ownerColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: ownerColumns"></tr>
+            </table>
+        </ng-container>
+
+        <ng-template #noOwners>
+            <p>No owners found.</p>
+        </ng-template>
+
+        <mat-paginator [length]="ownerResult.totalCount" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons>
+        </mat-paginator>
+    </div>
+</div>

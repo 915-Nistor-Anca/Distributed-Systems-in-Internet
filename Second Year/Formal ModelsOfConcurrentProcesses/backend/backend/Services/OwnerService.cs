@@ -13,11 +13,11 @@ namespace backend.Services
             _ownerRepository = ownerRepository;
             _mapper = mapper;
         }
-        public async Task<int> AddOwnerAsync(OwnerDto owner)
+        public async Task<Owner> AddOwnerAsync(OwnerDto owner)
         {
             var mappedOwner = _mapper.Map<Owner>(owner);
-            var ownerId = await _ownerRepository.AddOwnerAsync(mappedOwner);
-            return ownerId;
+            var addedOwner = await _ownerRepository.AddOwnerAsync(mappedOwner);
+            return addedOwner;
         }
         public async Task DeleteOwnerByIdAsync(int ownerId)
         {

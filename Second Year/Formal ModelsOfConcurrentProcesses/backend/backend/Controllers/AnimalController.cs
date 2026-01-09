@@ -47,13 +47,13 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAllAnimals(int pageNumber, int pageSize, int? speciesId)
+        public async Task<ActionResult> GetAllAnimals(int pageNumber, int pageSize, int? speciesId, string? sortBy)
         {
-            var animals = await _animalService.GetAllAnimalsAsync(pageNumber, pageSize, speciesId);
+            var animals = await _animalService.GetAllAnimalsAsync(pageNumber, pageSize, speciesId, sortBy);
             return Ok(animals);
         }
 
-        [HttpGet("search/{name}")]
+        [HttpGet("search")]
         public async Task<IActionResult> SearchByName([FromQuery] string? name)
         {
             var animals = await _animalService.SearchByNameAsync(name);

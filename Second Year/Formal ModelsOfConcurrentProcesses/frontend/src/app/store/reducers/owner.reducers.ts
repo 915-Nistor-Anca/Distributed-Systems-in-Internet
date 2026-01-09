@@ -1,33 +1,42 @@
 import { createReducer, on } from "@ngrx/store";
-import { Species, SpeciesResult } from "src/app/features/models/species.models";
-import { GET_ALL_SPECIE_FAILURE, GET_ALL_SPECIES_SUCCESS } from "../actions/species.actions";
+import { Owner, OwnerResult } from "src/app/features/models/owner.models";
+import { ADD_OWNER_SUCCESS, GET_ALL_OWNERS_FAILURE, GET_ALL_OWNERS_SUCCESS } from "../actions/owner.actions";
 
-export interface ISpeciesState {
-  speciesResult: SpeciesResult;
-  species: Species;
+export interface IOwnerState {
+  ownerResult: OwnerResult;
+  owner: Owner;
   error: string;
 }
 
-export const INITIAL_STATE: ISpeciesState = {
-  speciesResult: {
+export const INITIAL_STATE: IOwnerState = {
+  ownerResult: {
     items: [],
+    totalCount: 0
   },
-  species: {
+  owner: {
     id: 0,
     name: '',
-   isExotic: false
+    phoneNumber: ''
   },
   error: '',
 };
 
-export const SPECIES_REDUCER = createReducer(
+export const OWNERS_REDUCER = createReducer(
   INITIAL_STATE,
-  on(GET_ALL_SPECIES_SUCCESS, (state: ISpeciesState, { speciesResult }) => ({
+  on(GET_ALL_OWNERS_SUCCESS, (state: IOwnerState, { ownerResult }) => ({
     ...state,
-    speciesResult,
+    ownerResult,
   })),
-  on(GET_ALL_SPECIE_FAILURE, (state: ISpeciesState, { error }) => ({
+  on(GET_ALL_OWNERS_FAILURE, (state: IOwnerState, { error }) => ({
     ...state,
     error: error,
   })),
+  on(ADD_OWNER_SUCCESS, (state: IOwnerState, { owner }) => ({
+      ...state,
+      ownerResult: {
+        ...state.ownerResult,
+        items: [...state.ownerResult.items, { ...owner }],
+        totalCount: state.ownerResult.totalCount + 1
+      },
+    })),
 );

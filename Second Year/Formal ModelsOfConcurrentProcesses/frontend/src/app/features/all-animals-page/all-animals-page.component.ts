@@ -37,6 +37,8 @@ export class AllAnimalsPageComponent implements AfterViewInit {
   editedAnimal: Animal | null = null;
   editedRowId: number | null = null;
   selectedSpeciesId: number | null = null;
+  searchName: string = '';
+  selectedSort: 'name' | 'birthDate' | null = null;
 
   constructor(private store: Store) {
     this.animalResult$ = this.store.select(SELECT_ANIMAL_RESULT);
@@ -77,7 +79,8 @@ export class AllAnimalsPageComponent implements AfterViewInit {
           pageNumber: this.paginator.pageIndex + 1,
           pageSize: this.paginator.pageSize,
         },
-        speciesId: null
+        speciesId: null,
+        sortBy: this.selectedSort
       })
     );
   }
@@ -122,8 +125,6 @@ export class AllAnimalsPageComponent implements AfterViewInit {
     this.dialog.open(AddAnimalDialogComponent);
   }
 
-  searchName: string = '';
-
 onSearchNameChange(value: string): void {
   this.searchName = value;
 
@@ -132,6 +133,24 @@ onSearchNameChange(value: string): void {
     this.paginator.pageIndex = 1;
   }
 }
+
+onSortChange(): void {
+  this.store.dispatch(
+    GET_ALL_ANIMALS({
+      animalPagination: {
+        pageNumber: 1,
+        pageSize: this.selectedSort != null ? 100 : this.paginator.pageSize,
+      },
+      speciesId: this.selectedSpeciesId,
+      sortBy: this.selectedSort
+    })
+  );
+
+  if (this.paginator) {
+    this.paginator.pageIndex = 0;
+  }
+}
+
 
 clearSearch(): void {
   this.searchName = '';
@@ -147,9 +166,10 @@ this.store.dispatch(
       GET_ALL_ANIMALS({
         animalPagination: {
           pageNumber: 1,
-          pageSize: 100,
+          pageSize: this.selectedSpeciesId != null ? 100 : this.paginator.pageSize,
         },
-        speciesId: this.selectedSpeciesId
+        speciesId: this.selectedSpeciesId,
+        sortBy: this.selectedSort
       })
     );
 }

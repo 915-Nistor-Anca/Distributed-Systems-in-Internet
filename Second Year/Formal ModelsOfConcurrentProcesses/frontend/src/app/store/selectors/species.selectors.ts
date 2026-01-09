@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { ISpeciesState } from "../reducers/owner.reducers";
+import { ISpeciesState } from "../reducers/species.reducers";
 
 export const SELECT_SPECIES_STATE =
   createFeatureSelector<ISpeciesState>('species');

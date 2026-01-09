@@ -4,6 +4,7 @@ using backend.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using backend.Validators;
+using Microsoft.IdentityModel.Tokens;
 
 namespace backend.Services
 {
@@ -38,7 +39,7 @@ namespace backend.Services
         {
             await _animalRepository.DeleteAnimalByIdAsync(animalId);
         }
-        public async Task<PagedResult<AnimalDto>> GetAllAnimalsAsync(int pageNumber, int pageSize, int? speciesId)
+        public async Task<PagedResult<AnimalDto>> GetAllAnimalsAsync(int pageNumber, int pageSize, int? speciesId, string? sortBy)
         {
             var animals = await _animalRepository.GetAllAnimalsAsync(pageNumber, pageSize);
             
@@ -47,11 +48,26 @@ namespace backend.Services
                 animals = animals.Where(a => a.Species.Id == speciesId.Value).ToList();
             }
 
+            if (sortBy.IsNullOrEmpty() == false)
+            {
+                animals = sortBy.ToLower() switch
+                {
+                    "name" => animals.OrderBy(a => a.Name).ToList(),
+                    "birthdate" => animals.OrderBy(a => a.BirthDate).ToList(),
+                    _ => animals
+                };
+            }
+
+            var totalCount = await _animalRepository.GetTotalNumberOfAnimalsAsync();
+            if (speciesId.HasValue || !sortBy.IsNullOrEmpty())
+            {
+                totalCount = animals.Count();
+            }
             var mappedAnimals = _mapper.Map<ICollection<AnimalDto>>(animals);
             return new PagedResult<AnimalDto>
             {
                 Items = mappedAnimals,
-                TotalCount = animals.Count()
+                TotalCount = totalCount
             };
         }
         public async Task<AnimalDto> GetAnimalByIdAsync(int animalId)
