@@ -1,0 +1,55 @@
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+build/
+bin/
+obj/
+out/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+
+# ASP.NET
+appsettings.*.json
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+*.nuspec
+*.psmdcp
+
+# Others
+*.log
+*.tlog
+*.cache
+*.bak
+*.tmp
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+
+# DotCover
+*.dotCover
+
+# User-specific files
+*.vspscc
+*.vssscc
+
+# Build artifacts
+project.lock.json
+project.fragment.lock.json
+
+# Windows image file caches
+Thumbs.db

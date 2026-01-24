@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.toast-container {
+  z-index: 9999 !important;
+  position: fixed !important;
+  top: 1rem !important;
+  right: 1rem !important;
+  margin: 0 !important;
+  pointer-events: none;
+}
